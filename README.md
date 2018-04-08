@@ -31,7 +31,10 @@ module "ebs_bckup" {
 ```
 ## ToDo
 Confirm the new tagging method to trigger using Key instead of Value works 100%
+
 Confirm tags are still being included on EBS snapshots.
+
+Fix using tags in variables, instead of hard-coded in main.tf.
 
 
 ## Credits
