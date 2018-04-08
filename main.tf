@@ -26,7 +26,7 @@ data "template_file" "vars" {
       EC2_INSTANCE_TAG                   = "${var.EC2_INSTANCE_TAG}"
       RETENTION_DAYS                     = "${var.RETENTION_DAYS}"
       REGIONS                            = "${join(",", var.regions)}"
-      TAGS_TO_COPY                       = "${join(",", var.TAGS_TO_COPY)}"
+      TAGS_TO_COPY                       = ["Name", "CostCentre"] # "${var.TAGS_TO_GOPY}"
     }
 }
 
@@ -68,7 +68,15 @@ resource "aws_lambda_function" "ebs_bckup_lambda" {
 resource "aws_cloudwatch_event_rule" "ebs_bckup_timer" {
   name = "${var.stack_prefix}_ebs_bckup_event_${var.unique_name}"
   description = "Cronlike scheduled Cloudwatch Event for creating and deleting EBS Snapshots"
-  schedule_expression = "cron(${var.cron_expression})"
+  event_pattern = <<PATTERN
+{
+  "source": [ "aws.ec2" ],
+  "detail-type": [ "EC2 Instance State-change Notification" ],
+  "detail": {
+    "state": [ "${var.instance_state}" ]
+  }
+}
+PATTERN
 }
 
 # Assign event to Lambda target

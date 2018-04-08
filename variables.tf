@@ -1,11 +1,11 @@
 # declare necessary variables
 
 variable "EC2_INSTANCE_TAG" {
-  default     = "Backup"
+  default     = "PreviousEbsBackup"
   description = "Tag to identify the EC2 target instances of the Lambda Function"
 }
 variable "RETENTION_DAYS" {
-  default = 5
+  default = 7
   description = "Numbers of Days that the EBS Snapshots will be stored (INT)"
 }
 variable "TAGS_TO_COPY" {
@@ -17,15 +17,17 @@ variable "unique_name" {
   description = "Enter Unique Name to identify the Terraform Stack (lowercase)"
 }
 
+variable "instance_state" {
+  default = "stopped"
+  description = "Enter the instance state, which will trigger the function to run. E.g. 'stopped', 'running'."
+}
+
 variable "stack_prefix" {
   default = "ebs_bckup"
   description = "Stack Prefix for resource generation"
 }
 
-variable "cron_expression" {
-  description = "Cron expression for firing up the Lambda Function"
-}
-
 variable "regions" {
   type = "list"
+  default = "eu-west-1"
 }
