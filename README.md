@@ -39,5 +39,7 @@ Fix using tags in variables, instead of hard-coded in main.tf.
 
 ## Credits
 Thanks to [kgorskowski](https://github.com/kgorskowski) for the base ebs_bckup solution.
+
 Thanks to [rastandy](https://github.com/rastandy) for adding more tags to EBS snapshot.
+
 [Mistawes](https://github.com/mistawes) Changed this to allow for multiple timezones, using an instance changing state as a trigger. Also prevents duplicate backups, thanks to the modified tagging method.
